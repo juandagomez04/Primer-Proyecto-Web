@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Inicio de Sesión - Aventones</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <!-- Login Box Container -->
+  <div class="login-box">
+    <!-- Header with Logo and Title -->
+    <div class="header">
+      <img src="Images/Icono.png" alt="Logo" class="logo">
+      <h1 class="title">AVENTONES</h1>
+    </div>
+
+    <!-- Login Form Section -->
+    <div class="login-form">
+      <!-- Google Sign-In Button -->
+      <a class="google-btn" href="myrides.html">
+        <img src="https://developers.google.com/identity/images/g-logo.png" alt="Google" class="google-icon">
+        Sign in with Google
+      </a>
+
+      <div class="separator">Or</div>
+
+      <!-- Username/Password Login Form -->
+      <form action="myrides.html" method="get">
+        <div class="field">
+          <label for="username">Email</label>
+          <input type="text" id="username" name="username" required>
+        </div>
+        <div class="field">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required>
+        </div>
+
+        <!-- Registration Link -->
+        <p class="register-link">
+          Not a user? <a href="register.html">Register Now</a>
+        </p>
+
+        <button type="submit" class="submit-btn login-btn">Login</button>
+      </form>
+    </div>
+  </div>
+
+  <!-- Footer with navigation links -->
+  <footer>
+    <hr>
+    <nav>
+      <a href="home_searchrides.html">Home</a> |
+      <a href="myrides.html">Rides</a> |
+      <a href="bookings.html">Bookings</a> |
+      <a href="home_configuration.html">Settings</a> |
+      <a href="index.html">Login</a> |
+      <a href="register.html">Register</a>
+    </nav>
+    <p>&copy; Aventones.com</p>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const form = document.querySelector('form');
+
+      form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const email = document.getElementById('username').value.trim();
+        const password = document.getElementById('password').value;
+
+        const users = JSON.parse(localStorage.getItem('users')) || [];
+        const drivers = JSON.parse(localStorage.getItem('drivers')) || [];
+
+        // Buscar en usuarios normales
+        const user = users.find(u => u.email === email && u.password === password);
+
+        // Buscar en conductores si no se encontró en usuarios
+        const driver = drivers.find(d => d.email === email && d.password === password);
+
+        if (user) {
+          alert(`Bienvenido, ${user.fname}`);
+          window.location.href = 'myrides.html';
+        } else if (driver) {
+          alert(`Bienvenido conductor, ${driver.fname}`);
+          window.location.href = 'myrides.html'; // O podrías redirigir a otra vista si lo deseas
+        } else {
+          alert('Correo o contraseña incorrecta');
+        }
+      });
+    });
+  </script>
+
+
+</body>
+
+</html>
